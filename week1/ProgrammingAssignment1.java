@@ -24,19 +24,20 @@ public class ProgrammingAssignment1 {
      */
 
     public static double multiplying(double num1, double num2, int n) {
-        double a = 0, b = 0, c = 0, d = 0;
-        if(n == 1){
+        double a = 0, b = 0, c = 0, d = 0, ac = 0, bd = 0, gauss = 0;
+        if (n == 1) {
             return num1 * num2;
         }
         if (n > 1) {
-            b = num1 % Math.pow(10,(n / 2));
-            a = (num1 - b) /  Math.pow(10,(n / 2));
-            d = num2 % Math.pow(10,(n / 2));
-            c = (num2 - d) /  Math.pow(10,(n / 2));
-            multiplying(a, b, n / 2);
-            multiplying(c, d, n / 2);
+            b = num1 % Math.pow(10, (n / 2));
+            a = (num1 - b) / Math.pow(10, (n / 2));
+            d = num2 % Math.pow(10, (n / 2));
+            c = (num2 - d) / Math.pow(10, (n / 2));
+            ac = multiplying(a, c, n / 2);
+            bd = multiplying(b, d, n / 2);
+            gauss = (a + b) * (c + d) - ac - bd;
         }
-        return Math.pow(10, n) * a * c + Math.pow(10,(n / 2)) * (a * d + b * c) + b * d;
+        return Math.pow(10, n) * ac + Math.pow(10, (n / 2)) * gauss + bd;
     }
 
 }
