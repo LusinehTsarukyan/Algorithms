@@ -35,7 +35,7 @@ public class ProgrammingAssignment1 {
             c = (num2 - d) / Math.pow(10, (n / 2));
             ac = multiplying(a, c, n / 2);
             bd = multiplying(b, d, n / 2);
-            gauss = (a + b) * (c + d) - ac - bd;
+            gauss = multiplying(a + b,c + d, n / 2) - ac - bd;
         }
         return Math.pow(10, n) * ac + Math.pow(10, (n / 2)) * gauss + bd;
     }
