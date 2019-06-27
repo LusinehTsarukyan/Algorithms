@@ -58,50 +58,60 @@ public class ProgrammingAssignment1Test {
 
     @Test
     public void handmadeKaratsuba(){
-//        BigInteger a3 = new BigInteger("3141592653589793238462643383279502884197169399375105820974944592");
-//        BigInteger b3 = new BigInteger("2718281828459045235360287471352662497757247093699959574966967627");
-//        int n3 = 64;
-//        BigInteger product3 = ProgrammingAssignment1.karatsuba(a3, b3, n3);
+        BigInteger a3 = new BigInteger("3141592653589793238462643383279502884197169399375105820974944592");
+        BigInteger b3 = new BigInteger("2718281828459045235360287471352662497757247093699959574966967627");
+        int n3 = 64;
+        BigInteger product3 = ProgrammingAssignment1.karatsuba(a3, b3, n3);
+
+        String first = "3141592653589793238462643383279502884197169399375105820974944592";
+        String second = "2718281828459045235360287471352662497757247093699959574966967627";
+        int n = 64;
+        String result = ProgrammingAssignment1.recMult(first,second,n);
+
+        assertEquals(product3.toString(),result);
+
+        String a = "1234";
+        String b = "5678";
+        int n1 = 4;
+        String product = ProgrammingAssignment1.recMult(a, b, n1);
+
+        assertEquals("7006652", product);
+
+//        String a = "12";
+//        String b = "34";
+//        int n1 = 2;
+//        String product = ProgrammingAssignment1.recMult(a, b, n1);
 //
-//        String first = "3141592653589793238462643383279502884197169399375105820974944592";
-//        String second = "2718281828459045235360287471352662497757247093699959574966967627";
-//        int n = 64;
-//        String result = ProgrammingAssignment1.handmadeKaratsuba(first,second,n);
-//
-//        assertEquals(product3,result);
-
-//        String a = "1234";
-//        String b = "5678";
-//        int n1 = 4;
-//        String product = ProgrammingAssignment1.handmadeKaratsuba(a, b, n1);
-
-//        assertEquals("7006652", product);
-
-        String a = "99";
-        String b = "88";
-        int n1 = 2;
-        String product = ProgrammingAssignment1.handmadeKaratsuba(a, b, n1);
-
-        assertEquals("8712", product);
+//        assertEquals("408", product);
     }
 
     @Test
     public void add(){
-        String a = "1234";
-        String b = "5678";
+        String a = "5112";
+        String b = "22";
 
         String result = ProgrammingAssignment1.add(a,b);
 
-        assertEquals(String.valueOf(1234+5678), result);
+        assertEquals(String.valueOf(5112+22), result);
     }
 
     @Test
     public void sub(){
         String a = "501";
-        String b = "12";
+        String b = "11";
 
         String result = ProgrammingAssignment1.subtract(a,b);
 
-        assertEquals(String.valueOf(501 - 12), result);
+        assertEquals(String.valueOf(501 - 11), result);
+    }
+
+    @Test
+    public void mult(){
+        String a = "2";
+        String b = "3";
+
+        String result = ProgrammingAssignment1.multiply(a,b);
+
+        assertEquals(String.valueOf(6), result);
     }
 }

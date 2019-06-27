@@ -4,6 +4,7 @@ import java.math.BigInteger;
 
 import static java.lang.Integer.highestOneBit;
 import static java.lang.Integer.parseInt;
+import static java.lang.Integer.valueOf;
 
 public class ProgrammingAssignment1 {
     /**
@@ -70,7 +71,7 @@ public class ProgrammingAssignment1 {
         return ac.multiply(ten.pow(n)).add(gauss.multiply((ten.pow(n / 2)))).add(bd);
     }
 
-    public static String handmadeKaratsuba(String num1, String num2, int n) {
+    public static String recMult(String num1, String num2, int n) {
         String a;
         String b;
         String c;
@@ -79,7 +80,7 @@ public class ProgrammingAssignment1 {
         String bd = "";
         String ad = "";
         String bc = "";
-        String gauss = "";
+        String sum_ad_bc;
         if (n == 1) {
             return multiply(num1, num2);
         }
@@ -88,17 +89,14 @@ public class ProgrammingAssignment1 {
             b = num1.substring(n / 2, n);
             c = num2.substring(0, n / 2);
             d = num2.substring(n / 2, n);
-            ac = handmadeKaratsuba(a, c, n / 2);
-            bd = handmadeKaratsuba(b, d, n / 2);
-            ad = handmadeKaratsuba(a, d, n/2);
-            bc = handmadeKaratsuba(b, c, n/2);
-            String add_a_b = add(a, b);
-            String add_c_d = add(c, d);
-            gauss = subtract((subtract(handmadeKaratsuba(add_a_b, add_c_d, n / 2), ac)), bd);
+            ac = recMult(a, c, n / 2);
+            bd = recMult(b, d, n / 2);
+            ad = recMult(a, d, n / 2);
+            bc = recMult(b, c, n / 2);
         }
         ac = pow(ac, n);
-        gauss = pow(gauss, n / 2);
-        return add(add(ac, gauss), bd);
+        sum_ad_bc = pow(add(ad, bc), n / 2);
+        return add(add(ac, sum_ad_bc), bd);
     }
 
     private static String pow(String a, int n) {
@@ -108,8 +106,26 @@ public class ProgrammingAssignment1 {
         return a;
     }
 
+    static boolean isSmaller(String s1, String s2) {
+        if (s1.length() < s2.length()) {
+            return true;
+        }
+        if (s2.length() < s1.length()) {
+            return false;
+        }
+
+        for (int i = 0; i < s1.length(); i++) {
+            if (s1.charAt(i) < s2.charAt(i)) {
+                return true;
+            } else if (s1.charAt(i) > s2.charAt(i)) {
+                return false;
+            }
+        }
+        return false;
+    }
+
     public static String add(String s1, String s2) {
-        if (s1.length() > s2.length()) {
+        if (isSmaller(s2, s1)) {
             String t = s1;
             s1 = s2;
             s2 = t;
@@ -135,24 +151,6 @@ public class ProgrammingAssignment1 {
             res += (char) (p + '0');
         }
         return new StringBuilder(res).reverse().toString();
-    }
-
-    static boolean isSmaller(String s1, String s2) {
-        if (s1.length() < s2.length()) {
-            return true;
-        }
-        if (s2.length() < s1.length()) {
-            return false;
-        }
-
-        for (int i = 0; i < s1.length(); i++) {
-            if (s1.charAt(i) < s2.charAt(i)) {
-                return true;
-            } else if (s1.charAt(i) > s2.charAt(i)) {
-                return false;
-            }
-        }
-        return false;
     }
 
     static String subtract(String s1, String s2) {
@@ -197,19 +195,15 @@ public class ProgrammingAssignment1 {
             res += (char) (sub + '0');
         }
 
-        if(negative){
+        if (negative) {
             return new StringBuilder(res).append("-").reverse().toString();
         }
         return new StringBuilder(res).reverse().toString();
     }
 
 
-    private static String multiply(String s1, String s2) {
-        String res = "0";
-        for (int i = 0; i < parseInt(s2); i++) {
-            res = add(res, s1);
-        }
-        return res;
+     static String multiply(String s1, String s2) {
+        return String.valueOf(valueOf(s1) * valueOf(s2));
     }
 }
 
