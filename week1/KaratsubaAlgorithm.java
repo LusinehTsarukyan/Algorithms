@@ -2,11 +2,9 @@ package week1;
 
 import java.math.BigInteger;
 
-import static java.lang.Integer.highestOneBit;
-import static java.lang.Integer.parseInt;
 import static java.lang.Integer.valueOf;
 
-public class ProgrammingAssignment1 {
+public class KaratsubaAlgorithm {
     /**
      * Programming Assignment #1
      * Quiz: Programming Assignment #1 1 question
