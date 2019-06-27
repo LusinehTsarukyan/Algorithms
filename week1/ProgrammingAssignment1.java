@@ -1,5 +1,10 @@
 package week1;
 
+import java.math.BigInteger;
+
+import static java.lang.Integer.highestOneBit;
+import static java.lang.Integer.parseInt;
+
 public class ProgrammingAssignment1 {
     /**
      * Programming Assignment #1
@@ -35,10 +40,176 @@ public class ProgrammingAssignment1 {
             c = (num2 - d) / Math.pow(10, (n / 2));
             ac = multiplying(a, c, n / 2);
             bd = multiplying(b, d, n / 2);
-            gauss = multiplying(a + b,c + d, n / 2) - ac - bd;
+            gauss = multiplying(a + b, c + d, n / 2) - ac - bd;
         }
         return Math.pow(10, n) * ac + Math.pow(10, (n / 2)) * gauss + bd;
     }
 
+
+    public static BigInteger karatsuba(BigInteger num1, BigInteger num2, int n) {
+        BigInteger a;
+        BigInteger b;
+        BigInteger c;
+        BigInteger d;
+        BigInteger ac = new BigInteger("0");
+        BigInteger bd = new BigInteger("0");
+        BigInteger gauss = new BigInteger("0");
+        BigInteger ten = new BigInteger("10");
+        if (n == 1) {
+            return num1.multiply(num2);
+        }
+        if (n > 1) {
+            b = num1.remainder(ten.pow(n / 2));
+            a = (num1.subtract(b)).divide(ten.pow(n / 2));
+            d = num2.remainder(ten.pow(n / 2));
+            c = (num2.subtract(d)).divide(ten.pow(n / 2));
+            ac = karatsuba(a, c, n / 2);
+            bd = karatsuba(b, d, n / 2);
+            gauss = (karatsuba(a.add(b), c.add(d), n / 2).subtract(ac)).subtract(bd);
+        }
+        return ac.multiply(ten.pow(n)).add(gauss.multiply((ten.pow(n / 2)))).add(bd);
+    }
+
+    public static String handmadeKaratsuba(String num1, String num2, int n) {
+        String a;
+        String b;
+        String c;
+        String d;
+        String ac = "";
+        String bd = "";
+        String ad = "";
+        String bc = "";
+        String gauss = "";
+        if (n == 1) {
+            return multiply(num1, num2);
+        }
+        if (n > 1) {
+            a = num1.substring(0, n / 2);
+            b = num1.substring(n / 2, n);
+            c = num2.substring(0, n / 2);
+            d = num2.substring(n / 2, n);
+            ac = handmadeKaratsuba(a, c, n / 2);
+            bd = handmadeKaratsuba(b, d, n / 2);
+            ad = handmadeKaratsuba(a, d, n/2);
+            bc = handmadeKaratsuba(b, c, n/2);
+            String add_a_b = add(a, b);
+            String add_c_d = add(c, d);
+            gauss = subtract((subtract(handmadeKaratsuba(add_a_b, add_c_d, n / 2), ac)), bd);
+        }
+        ac = pow(ac, n);
+        gauss = pow(gauss, n / 2);
+        return add(add(ac, gauss), bd);
+    }
+
+    private static String pow(String a, int n) {
+        for (int i = 0; i < n; ++i) {
+            a = new StringBuilder().append(a).append("0").toString();
+        }
+        return a;
+    }
+
+    public static String add(String s1, String s2) {
+        if (s1.length() > s2.length()) {
+            String t = s1;
+            s1 = s2;
+            s2 = t;
+        }
+
+        s1 = new StringBuilder(s1).reverse().toString();
+        s2 = new StringBuilder(s2).reverse().toString();
+        int p = 0;
+        String res = "";
+
+        for (int i = 0; i < s1.length(); i++) {
+            int sum = ((s1.charAt(i) - '0') + (s2.charAt(i) - '0') + p);
+            res += (char) (sum % 10 + '0');
+
+            p = sum / 10;
+        }
+        for (int i = s1.length(); i < s2.length(); i++) {
+            int sum = ((s2.charAt(i) - '0') + p);
+            res += (char) (sum % 10 + '0');
+            p = sum / 10;
+        }
+        if (p > 0) {
+            res += (char) (p + '0');
+        }
+        return new StringBuilder(res).reverse().toString();
+    }
+
+    static boolean isSmaller(String s1, String s2) {
+        if (s1.length() < s2.length()) {
+            return true;
+        }
+        if (s2.length() < s1.length()) {
+            return false;
+        }
+
+        for (int i = 0; i < s1.length(); i++) {
+            if (s1.charAt(i) < s2.charAt(i)) {
+                return true;
+            } else if (s1.charAt(i) > s2.charAt(i)) {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    static String subtract(String s1, String s2) {
+        boolean negative = false;
+        if (isSmaller(s1, s2)) {
+            String t = s1;
+            s1 = s2;
+            s2 = t;
+            negative = true;
+        }
+
+        String res = "";
+
+        s1 = new StringBuilder(s1).reverse().toString();
+        s2 = new StringBuilder(s2).reverse().toString();
+
+        int p = 0;
+
+        for (int i = 0; i < s2.length(); i++) {
+            int sub = ((s1.charAt(i) - '0') - (s2.charAt(i) - '0') - p);
+
+            if (sub < 0) {
+                sub = sub + 10;
+                p = 1;
+            } else {
+                p = 0;
+            }
+
+            res += (char) (sub + '0');
+        }
+
+        for (int i = s2.length(); i < s1.length(); i++) {
+            int sub = ((s1.charAt(i) - '0') - p);
+
+            if (sub < 0) {
+                sub = sub + 10;
+                p = 1;
+            } else {
+                p = 0;
+            }
+
+            res += (char) (sub + '0');
+        }
+
+        if(negative){
+            return new StringBuilder(res).append("-").reverse().toString();
+        }
+        return new StringBuilder(res).reverse().toString();
+    }
+
+
+    private static String multiply(String s1, String s2) {
+        String res = "0";
+        for (int i = 0; i < parseInt(s2); i++) {
+            res = add(res, s1);
+        }
+        return res;
+    }
 }
 
