@@ -29,12 +29,9 @@ public class Inversions {
     public static ArrayList<Integer> reader() throws IOException {
         List<Integer> array = new ArrayList<Integer>();
         try (Scanner sc = new Scanner(new File("C:/Users/Lyulik/Desktop/coursera/nums.txt"))) {
-            while (true) {
+            while (sc.hasNext()) {
                 int i = sc.nextInt();
                 array.add(i);
-                if (i == 91901) {
-                    break;
-                }
             }
         }
         //System.out.println(array);
