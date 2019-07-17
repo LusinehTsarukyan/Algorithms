@@ -54,11 +54,11 @@ public class Inversions {
             int left, right, mid;
             left = 0;
             right = length - 1;
-            mid = (left + right) / 2;
+            mid = (left + right) / 2 + 1;
 
 
             first = inversions(input.subList(left, mid), output, length / 2);
-            second = inversions(input.subList(mid + 1, right), output, length / 2);
+            second = inversions(input.subList(mid, right + 1), output, length / 2);
             split = countSplitInv(input, length, output);
         }
 
@@ -73,7 +73,7 @@ public class Inversions {
         int j = mid + 1;
         long count = 0;
 
-        while ((i <= mid - 1) && (j <= right)) {
+        while ((i <= mid) && (j <= right)) {
             if (input.get(i) < input.get(j)) {
                 output.add(input.get(i));
                 i++;
@@ -84,7 +84,7 @@ public class Inversions {
             }
         }
 
-        while (i <= mid - 1) {
+        while (i <= mid) {
             output.add(input.get(i));
             i++;
         }
@@ -94,8 +94,8 @@ public class Inversions {
             j++;
         }
 
-        for (int k = 0; k < input.size(); k++) {
-            input.clear();
+        input.clear();
+        for (int k = 0; k < length; k++) {
             input.add((Integer) output.get(k));
         }
 
