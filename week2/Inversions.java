@@ -38,12 +38,12 @@ public class Inversions {
         return (ArrayList<Integer>) array;
     }
 
-    public static long invWrapper(List arrayList){
-         ArrayList<Integer> output = new ArrayList<>(arrayList.size());
-         return inversions(arrayList,output,arrayList.size());
+    public static long invWrapper(List input){
+         ArrayList<Integer> output = new ArrayList<>(input.size());
+         return inversions(input,output,input.size());
     }
 
-    public static long inversions(List arrayList,List output, int length) { // sort and count
+    public static long inversions(List input,List output, int length) { // sort and count
         long first = 0;
         long second = 0;
         long split = 0;
@@ -57,15 +57,15 @@ public class Inversions {
             mid = (left + right) / 2;
 
 
-            first = inversions(arrayList.subList(left, mid), output, length / 2);
-            second = inversions(arrayList.subList(mid + 1, right), output, length / 2);
-            split = countSplitInv(arrayList, length, output);
+            first = inversions(input.subList(left, mid), output, length / 2);
+            second = inversions(input.subList(mid + 1, right), output, length / 2);
+            split = countSplitInv(input, length, output);
         }
 
         return first + second + split;
     }
 
-    private static long countSplitInv(List<Integer> arrayList, int length, List output) { //merge and count
+    private static long countSplitInv(List<Integer> input, int length, List output) { //merge and count
         int left = 0;
         int right = length - 1;
         int mid = (left + right) / 2;
@@ -74,29 +74,29 @@ public class Inversions {
         long count = 0;
 
         while ((i <= mid - 1) && (j <= right)) {
-            if (arrayList.get(i) < arrayList.get(j)) {
-                output.add(arrayList.get(i));
+            if (input.get(i) < input.get(j)) {
+                output.add(input.get(i));
                 i++;
-            } else if (arrayList.get(j) < arrayList.get(i)) {
-                output.add(arrayList.get(j));
+            } else if (input.get(j) < input.get(i)) {
+                output.add(input.get(j));
                 j++;
                 count = count + (length / 2 - 1 - i);
             }
         }
 
         while (i <= mid - 1) {
-            output.add(arrayList.get(i));
+            output.add(input.get(i));
             i++;
         }
 
         while (j <= right) {
-            output.add(arrayList.get(j));
+            output.add(input.get(j));
             j++;
         }
 
-        for (int k = 0; k < arrayList.size(); k++) {
-            arrayList.clear();
-            arrayList.add((Integer) output.get(k));
+        for (int k = 0; k < input.size(); k++) {
+            input.clear();
+            input.add((Integer) output.get(k));
         }
 
         return count;
