@@ -26,9 +26,9 @@ public class Inversions {
      * [TIP: before submitting, first test the correctness of your program on some small test files or your own devising. Then post your best test cases to the discussion forums to help your fellow students!]
      */
 
-    public static ArrayList<Integer> reader() throws IOException {
+    public static ArrayList<Integer> reader(String path) throws IOException {
         List<Integer> array = new ArrayList<Integer>();
-        try (Scanner sc = new Scanner(new File("C:/Users/Lyulik/Desktop/coursera/nums.txt"))) {
+        try (Scanner sc = new Scanner(new File(path))) {
             while (sc.hasNext()) {
                 int i = sc.nextInt();
                 array.add(i);
@@ -117,7 +117,8 @@ public class Inversions {
 
 
 //        try {
-//            System.out.println(invWrapper(reader(), reader().size()));
+//            ArrayList file = reader("C:/Users/Lyulik/Desktop/coursera/nums.txt");
+//            System.out.println(invWrapper(file));
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
