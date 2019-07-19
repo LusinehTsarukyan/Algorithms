@@ -38,72 +38,64 @@ public class Inversions {
         return (ArrayList<Integer>) array;
     }
 
-    public static long invWrapper(List input){
-         ArrayList<Integer> output = new ArrayList<>(input.size());
-         return inversions(input,output,input.size());
+    public static long invWrapper(List input) {
+        ArrayList<Integer> output = new ArrayList<>(input.size());
+        return inversions(input, output);
     }
 
-    public static long inversions(List input,List output, int length) { // sort and count
+    public static long inversions(List input, List output) { // sort and count
         long first = 0;
         long second = 0;
         long split = 0;
 
-        if (length == 1) {
+        if (input.size() == 1) {
             return 0;
         } else {
-            int left, right, mid;
-            left = 0;
-            right = length - 1;
-            mid = (left + right) / 2 + 1;
-
-
-            first = inversions(input.subList(left, mid), output, length / 2);
-            second = inversions(input.subList(mid, right + 1), output, length / 2);
-            split = countSplitInv(input, length, output);
+            first = inversions(input.subList(0, input.size() / 2), output);
+            second = inversions(input.subList(input.size() / 2, input.size()), output);
+            split = countSplitInv(input, output);
         }
 
         return first + second + split;
     }
 
-    private static long countSplitInv(List<Integer> input, int length, List output) { //merge and count
-        int left = 0;
-        int right = length - 1;
-        int mid = (left + right) / 2;
-        int i = left;
-        int j = mid + 1;
+    private static long countSplitInv(List<Integer> input, List output) { //merge and count
+        int i = 0;
+        int j = input.size() / 2;
         long count = 0;
 
-        while ((i <= mid) && (j <= right)) {
+        while ((i <= input.size() / 2 - 1) && (j <= input.size() - 1)) {
             if (input.get(i) < input.get(j)) {
                 output.add(input.get(i));
                 i++;
             } else if (input.get(j) < input.get(i)) {
                 output.add(input.get(j));
                 j++;
-                count = count + (length / 2 - 1 - i);
+                count = count + (input.size() / 2 - i);
             }
         }
 
-        while (i <= mid) {
+        while (i <= input.size() / 2 - 1) {
             output.add(input.get(i));
             i++;
         }
 
-        while (j <= right) {
+        while (j <= input.size() - 1) {
             output.add(input.get(j));
             j++;
         }
 
         input.clear();
-        for (int k = 0; k < length; k++) {
+        for (int k = 0; k < output.size(); k++) {
             input.add((Integer) output.get(k));
         }
+        output.clear();
 
         return count;
     }
 
     public static void main(String args[]) throws IOException {
-        long res = 0;
+        long res;
         List<Integer> arr = new ArrayList<>();
         arr.add(1);
         arr.add(3);
@@ -116,12 +108,11 @@ public class Inversions {
         System.out.println(res);
 
 
-//        try {
-//            ArrayList file = reader("C:/Users/Lyulik/Desktop/coursera/nums.txt");
-//            System.out.println(invWrapper(file));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            ArrayList file = reader("C:/Users/Lyulik/Desktop/coursera/nums.txt");
+            System.out.println(invWrapper(file));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-
 }
