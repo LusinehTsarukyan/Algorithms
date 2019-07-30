@@ -65,11 +65,11 @@ public class QuickSort {
     public static int quickSort(List<Integer> input, int pivotType) {
         if (input.size() > 1) {
 
-            count += input.size() - 1;
+            count += input.size();
             int pivotInd = partition(input, pivotType);
 
-            quickSort(input.subList(0, pivotInd - 1), pivotType);
-            quickSort(input.subList(pivotInd, input.size()), pivotType);
+            quickSort(input.subList(0, pivotInd), pivotType);
+            quickSort(input.subList(pivotInd + 1, input.size()), pivotType);
         }
 
         return count;
@@ -97,7 +97,7 @@ public class QuickSort {
         int pivot = choosePivot(input, pivotType);
         int i = 1;
 
-        if (choosePivot(input, pivotType) != input.get(0)) {
+        if (pivot != input.get(0)) {
             Collections.swap(input, 0, input.indexOf(choosePivot(input, pivotType)));
         }
         for (int j = 1; j < input.size(); ++j) {
@@ -108,7 +108,7 @@ public class QuickSort {
         }
         Collections.swap(input, 0, i - 1);
 
-        return i;
+        return i - 1;
     }
 
     public static void main(String args[]) throws IOException {
