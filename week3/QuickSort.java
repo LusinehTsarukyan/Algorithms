@@ -84,7 +84,7 @@ public class QuickSort {
             ArrayList arr = new ArrayList();
             arr.add(input.get(0));
             arr.add(input.get(input.size() - 1));
-            arr.add(input.get(input.size() / 2));
+            arr.add(input.get(input.size() - input.size() / 2 - 1));
             Collections.sort(arr);
             return (int) arr.get(1);
         } else {
@@ -98,7 +98,8 @@ public class QuickSort {
         int i = 1;
 
         if (pivot != input.get(0)) {   //!!!!!!!!!!!!!!!!!!!!!!!!!???????????????????????????
-            Collections.swap(input, 0, input.indexOf(choosePivot(input, pivotType)));
+            Collections.swap(input, 0, input.indexOf(pivot));
+            pivot = input.get(0);
         }
         for (int j = 1; j < input.size(); ++j) {
             if (input.get(j) < pivot) {

@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class QuickSortTest {
 
     @Test
-    public void partitionTestForFirstElement(){
+    public void partitionTestForFirstElement() {
         List<Integer> arr = new ArrayList();
         arr.add(2);
         arr.add(1);
@@ -38,20 +38,37 @@ public class QuickSortTest {
     }
 
     @Test
-    public void quickSortTest(){
+    public void quickSortTest() {
         List<Integer> arr = new ArrayList();
+        arr.add(19);
+        arr.add(17);
         arr.add(4);
-        arr.add(3);
+        arr.add(12);
+        arr.add(18);
         arr.add(2);
-        arr.add(1);
+        arr.add(7);
+        arr.add(10);
+        arr.add(8);
+        arr.add(16);
+        arr.add(9);
+        arr.add(3);
         arr.add(5);
+        arr.add(6);
+        arr.add(15);
+        arr.add(11);
+        arr.add(20);
+        arr.add(1);
+        arr.add(13);
+        arr.add(14);
+
+
 //        int one = QuickSort.quickSort(arr, 1);
-        int two = QuickSort.quickSort(arr, 2);
+//        int two = QuickSort.quickSort(arr, 2);
 //        int three = QuickSort.quickSort(arr, 3);
 
-//        assertEquals(7, one);
-        assertEquals(8, two);
-//        assertEquals(6, three);
+//        assertEquals(91, one);
+//        assertEquals(78, two);
+//        assertEquals(66, three);
 //
 //        List<Integer> arr1 = new ArrayList();
 //        arr1.add(3);
@@ -90,15 +107,15 @@ public class QuickSortTest {
         try {
             ArrayList file = Inversions.reader("C:/Users/Lyulik/Desktop/coursera/QuickSort.txt");
             System.out.println(file);
-            ArrayList test = file;
-            Collections.sort(test);
-            System.out.println(test);
+//            ArrayList test = file;
+//            Collections.sort(test);
+//            System.out.println(test);
             //QuickSort.quickSort(file, 1);
-            System.out.println(file);
+//            System.out.println(file);
 //            System.out.println("NUMBER OF COMPARISONS first element:: " + QuickSort.quickSort(file, 1));
 //            System.out.println("NUMBER OF COMPARISONS last element:: " + QuickSort.quickSort(file, 2));
             System.out.println("NUMBER OF COMPARISONS last element:: " + QuickSort.quickSort(file, 3));
-            assertEquals(file, test);
+//            assertEquals(file, test);
         } catch (IOException e) {
             e.printStackTrace();
         }
