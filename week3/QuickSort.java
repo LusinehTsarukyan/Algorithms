@@ -65,7 +65,7 @@ public class QuickSort {
     public static int quickSort(List<Integer> input, int pivotType) {
         if (input.size() > 1) {
 
-            count += input.size();
+            count += input.size() - 1;
             int pivotInd = partition(input, pivotType);
 
             quickSort(input.subList(0, pivotInd), pivotType);
@@ -97,7 +97,7 @@ public class QuickSort {
         int pivot = choosePivot(input, pivotType);
         int i = 1;
 
-        if (pivot != input.get(0)) {
+        if (pivot != input.get(0)) {   //!!!!!!!!!!!!!!!!!!!!!!!!!???????????????????????????
             Collections.swap(input, 0, input.indexOf(choosePivot(input, pivotType)));
         }
         for (int j = 1; j < input.size(); ++j) {
