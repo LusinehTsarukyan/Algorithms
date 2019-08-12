@@ -22,12 +22,14 @@ public class KargerMinCut {
 
     public static Integer minCut(Graph graph){
         int minCut = graph.vertices.size() - 1; //Call an arbitrary vertex s, let t range over all other n-1 vertices, and return the best of the s-t min cuts founds.
+        Graph g = graph;
         for (int i = 0; i < graph.vertices.size() - 1; i++){
-            randomContract(graph);
-            int crossingEdges = graph.edges.size();
+            randomContract(g);
+            int crossingEdges = g.edges.size();
             if (crossingEdges < minCut){
                 minCut = crossingEdges;
             }
+            g = graph;
         }
         return minCut;
     }
@@ -44,6 +46,7 @@ public class KargerMinCut {
 
     public static void main(String[] args) throws FileNotFoundException {
         Graph graph = new Graph("C:/Users/Lyulik/Desktop/coursera/kargerMinCut.txt");
-        System.out.println(minCut(graph));
+        System.out.println("Counting the minimum cut of the graph.");
+        System.out.println("min cut == " + minCut(graph));
     }
 }
