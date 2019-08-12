@@ -23,7 +23,8 @@ public class KargerMinCut {
     public static Integer minCut(Graph graph){
         int minCut = graph.vertices.size() - 1; //Call an arbitrary vertex s, let t range over all other n-1 vertices, and return the best of the s-t min cuts founds.
         for (int i = 0; i < graph.vertices.size() - 1; i++){
-            int crossingEdges = randomContract(graph);
+            randomContract(graph);
+            int crossingEdges = graph.edges.size();
             if (crossingEdges < minCut){
                 minCut = crossingEdges;
             }
@@ -31,7 +32,7 @@ public class KargerMinCut {
         return minCut;
     }
 
-    public static int randomContract(Graph graph){
+    public static void randomContract(Graph graph){
         while(graph.vertices.size() > 2){
             Edge randomEdge = graph.pickRandomEdge();
 
@@ -39,7 +40,6 @@ public class KargerMinCut {
 
             //remove self loops already in merge function
         }
-        return graph.edges.size();
     }
 
     public static void main(String[] args) throws FileNotFoundException {

@@ -13,5 +13,9 @@ class KargerMinCutTest {
         Graph graph = new Graph("C:/Users/Lyulik/Desktop/coursera/testGraph.txt"); //kargerMinCut1.txt");
         int res = KargerMinCut.minCut(graph);
         assertEquals(2, res);
+
+        Graph graph1 = new Graph("C:/Users/Lyulik/Desktop/coursera/kargerMinCut1.txt");
+        int res1 = KargerMinCut.minCut(graph1);
+        assertEquals(2, res1);
     }
 }
