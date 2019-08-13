@@ -7,8 +7,15 @@ import java.util.*;
 public class Graph {
     ArrayList<Vertex> vertices;
     ArrayList<Edge> edges;
+    String path;
+
+    Graph(){
+        vertices = new ArrayList<>();
+        edges = new ArrayList<>();
+    }
 
     Graph(String path) throws FileNotFoundException {
+        this.path = path;
         vertices = new ArrayList<>();
         edges = new ArrayList<>();
 
@@ -54,8 +61,8 @@ public class Graph {
         return edges.get(r);
     }
 
-    public void merge(Vertex u, Vertex v) {
-        Vertex newVertex = new Vertex(this.vertices.size() + 1);
+    public int merge(Vertex u, Vertex v, int size) {
+        Vertex newVertex = new Vertex(size + 1);
         this.vertices.add(newVertex);
 
         for (int i = 0; i < u.adjacentTo.size(); ++i) {
@@ -106,5 +113,6 @@ public class Graph {
                 edges.get(i).v = newVertex;
             }
         }
+        return size + 1;
     }
 }
