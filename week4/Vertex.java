@@ -1,13 +1,16 @@
 package week4;
 
-import java.util.ArrayList;
+import java.io.Serializable;
+import java.util.HashMap;
 
-public class Vertex {
+public class Vertex implements Serializable {
     int label;
-    ArrayList<Vertex> adjacentTo;
+    //using HashMap, because many operations of adding and removing. HashSet does't have get() method,
+    // so HashMap is better for this algorithm
+    HashMap<Integer, Vertex> adjacentTo;
 
     public Vertex(int label){
         this.label = label;
-        adjacentTo = new ArrayList<>();
+        adjacentTo = new HashMap<>();
     }
 }

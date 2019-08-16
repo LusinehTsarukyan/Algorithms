@@ -25,12 +25,15 @@ public class KargerMinCut {
     public static Integer minCut(Graph graph) throws FileNotFoundException {
         int minCut = (int) Math.pow(2, graph.vertices.size() - 1) - 1;
         for (int i = 0; i < (int) (Math.pow(graph.vertices.size(), 2) * Math.log(graph.vertices.size())); i++) {
-            Graph g = new Graph(graph.path);
-            System.out.println("                   calling randomContract " + i + "th time");
+            Graph g = graph.deepClone();
+            if(i % 100 == 0) {
+                System.out.println("                   calling randomContract " + i + "th time");
+            }
             randomContract(g);
             int crossingEdges = g.edges.size();
             if (crossingEdges < minCut) {
                 minCut = crossingEdges;
+                System.out.println(minCut);
             }
         }
         return minCut;
@@ -39,15 +42,8 @@ public class KargerMinCut {
     public static void randomContract(Graph graph) {
         int res = graph.vertices.size();
         while (graph.vertices.size() > 2) {
-            System.out.println("vertices.size == " + graph.vertices.size());
-            System.out.println("edges.size == " + graph.edges.size());
-            System.out.println("calling pickRandomEdge");
             Edge randomEdge = graph.pickRandomEdge();
-            System.out.println("(" + randomEdge.u.label + "," + randomEdge.v.label + ")");
-
-            System.out.println("calling merge");
             res = graph.merge(randomEdge.u, randomEdge.v, res);
-            System.out.println("merging finished");
 
             //remove self loops already in merge function
         }

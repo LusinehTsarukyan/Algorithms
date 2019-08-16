@@ -1,22 +1,44 @@
 package week4;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.*;
 
-public class Graph {
-    ArrayList<Vertex> vertices;
+/**
+ * using HashMap as a vertices container, because many operations of adding and removing.
+ * HashSet does't have get() method, so HashMap is better for this algorithm.
+ * Also using Iterators(not foreach as a loop, because HashMap doesn't let us
+ * remove an element in proper way without iterators.
+ */
+public class Graph implements Cloneable, Serializable{
+    HashMap<Integer, Vertex> vertices;
     ArrayList<Edge> edges;
     String path;
 
-    Graph(){
-        vertices = new ArrayList<>();
+    Graph() {
+        vertices = new HashMap<>();
         edges = new ArrayList<>();
+    }
+
+
+    public Graph deepClone() {
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(baos);
+            oos.writeObject(this);
+
+            ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+            ObjectInputStream ois = new ObjectInputStream(bais);
+            return (Graph) ois.readObject();
+        } catch (IOException e) {
+            return null;
+        } catch (ClassNotFoundException e) {
+            return null;
+        }
     }
 
     Graph(String path) throws FileNotFoundException {
         this.path = path;
-        vertices = new ArrayList<>();
+        vertices = new HashMap<>();
         edges = new ArrayList<>();
 
         Scanner in = new Scanner(new File(path));
@@ -24,36 +46,37 @@ public class Graph {
             Scanner line = new Scanner(in.nextLine());
             int label = line.nextInt();
             Vertex v = new Vertex(label);
-            vertices.add(v);
+            vertices.put(label, v);
         }
 
-        int index = 0;
         Scanner in1 = new Scanner(new File(path));
         while (in1.hasNextLine()) {
             Scanner line = new Scanner(in1.nextLine());
             int label = line.nextInt();
             while (line.hasNext()) { //adding adjacent to 'v' vertices.
                 int adjToLabel = line.nextInt();
-                for (int i = 0; i < vertices.size(); ++i) {
-                    if (adjToLabel == vertices.get(i).label) {
+                for (Map.Entry<Integer, Vertex> entry : vertices.entrySet()) {
+                    Vertex v = entry.getValue();
+                    if (adjToLabel == v.label) {
                         if (label < adjToLabel) {
-                            Vertex v = vertices.get(i);
-                            vertices.get(index).adjacentTo.add(v);
+                            vertices.get(label).adjacentTo.put(v.label, v);
                         }
                     }
                 }
             }
-            index++;
         }
 
-        for (int i = 0; i < vertices.size(); ++i) {
-            for (int j = 0; j < vertices.get(i).adjacentTo.size(); ++j) {
-                Edge edge = new Edge(vertices.get(i), vertices.get(i).adjacentTo.get(j));
+        for (Map.Entry<Integer, Vertex> entry : vertices.entrySet()) {
+            Vertex u = entry.getValue();
+            for (Map.Entry<Integer, Vertex> entry1 : u.adjacentTo.entrySet()) {
+                Vertex v = entry1.getValue();
+                Vertex uLableV = vertices.get(u.label);
+                Edge edge = new Edge(uLableV, uLableV.adjacentTo.get(v.label));
                 edges.add(edge);
             }
         }
-
     }
+
 
     public Edge pickRandomEdge() {
         Random random = new Random();
@@ -63,36 +86,38 @@ public class Graph {
 
     public int merge(Vertex u, Vertex v, int size) {
         Vertex newVertex = new Vertex(size + 1);
-        this.vertices.add(newVertex);
+        this.vertices.put(newVertex.label, newVertex);
 
-        for (int i = 0; i < u.adjacentTo.size(); ++i) {
-            newVertex.adjacentTo.add(u.adjacentTo.get(i));
+        for (Map.Entry<Integer, Vertex> entry : u.adjacentTo.entrySet()) {
+            newVertex.adjacentTo.put(entry.getValue().label, entry.getValue());
         }
-        for (int j = 0; j < v.adjacentTo.size(); ++j) {
-            newVertex.adjacentTo.add(v.adjacentTo.get(j));
+        for (Map.Entry<Integer, Vertex> entry : v.adjacentTo.entrySet()) {
+            newVertex.adjacentTo.put(entry.getValue().label, entry.getValue());
         }
 
-        this.vertices.remove(u);
-        this.vertices.remove(v);
+        this.vertices.remove(u.label);
+        this.vertices.remove(v.label);
 
         //find all u and v and replace it with newVertex
-        for (int i = 0; i < vertices.size(); ++i) {
-            for (int j = 0; j < vertices.get(i).adjacentTo.size(); ++j) {
-                if (vertices.get(i).adjacentTo.get(j).label == u.label
-                        || vertices.get(i).adjacentTo.get(j).label == v.label) {
-                    vertices.get(i).adjacentTo.remove(vertices.get(i).adjacentTo.get(j));
-                    vertices.get(i).adjacentTo.add(newVertex);
+        for (Map.Entry<Integer, Vertex> entry : vertices.entrySet()) {
+            Iterator<Map.Entry<Integer, Vertex>> adjToIter = entry.getValue().adjacentTo.entrySet().iterator();
+            int oldVertexCount = 0;
+            while (adjToIter.hasNext()) {
+                Map.Entry<Integer, Vertex> entry1 = adjToIter.next();
+                if (entry1.getKey().equals(u.label) || entry1.getKey().equals(v.label)) {
+                    adjToIter.remove();
+                    oldVertexCount++;
                 }
+            }
+            while (oldVertexCount == 0) {
+                entry.getValue().adjacentTo.put(newVertex.label, newVertex);
+                oldVertexCount--;
             }
         }
 
         //removing self loops
-        for (int i = 0; i < vertices.size(); ++i) {
-            for (int j = 0; j < vertices.get(i).adjacentTo.size(); ++j) {
-                if (vertices.get(i).label == vertices.get(i).adjacentTo.get(j).label) {
-                    vertices.get(i).adjacentTo.remove(vertices.get(i).adjacentTo.get(j));
-                }
-            }
+        for (Map.Entry<Integer, Vertex> entry : vertices.entrySet()) {
+            entry.getValue().adjacentTo.entrySet().removeIf(entry1 -> entry.getValue().label == entry1.getValue().label);
         }
 
         //edges check
@@ -102,6 +127,7 @@ public class Graph {
                 edges.remove(edges.get(i));
             }
         }
+
         for (int i = 0; i < edges.size(); ++i) {
             if (edges.get(i).u.label == u.label) {
                 edges.get(i).u = newVertex;
@@ -113,6 +139,7 @@ public class Graph {
                 edges.get(i).v = newVertex;
             }
         }
+
         return size + 1;
     }
 }
