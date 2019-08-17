@@ -29,17 +29,17 @@ class GraphTest {
         Vertex u1 = graph5.vertices.get(3);
         Vertex v1 = graph5.vertices.get(4);
 
-        int res1 = graph5.merge(u1, v1, graph5.vertices.size());
+        graph5.merge(u1, v1);
 
         Vertex u2 = graph5.vertices.get(2);
         Vertex v2 = graph5.vertices.get(7);
 
-        res1 = graph5.merge(u2, v2, res1);
+        graph5.merge(u2, v2);
 
         Vertex u3 = graph5.vertices.get(1);
         Vertex v3 = graph5.vertices.get(8);
 
-        res1 = graph5.merge(u3, v3,res1);
+        graph5.merge(u3, v3);
 //        for (Vertex key : graph1.vertices) {
 //            if (key.label == 1) {
 //                u = key;

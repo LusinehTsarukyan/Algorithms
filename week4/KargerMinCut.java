@@ -40,10 +40,9 @@ public class KargerMinCut {
     }
 
     public static void randomContract(Graph graph) {
-        int res = graph.vertices.size();
         while (graph.vertices.size() > 2) {
             Edge randomEdge = graph.pickRandomEdge();
-            res = graph.merge(randomEdge.u, randomEdge.v, res);
+            graph.merge(randomEdge.u, randomEdge.v);
 
             //remove self loops already in merge function
         }

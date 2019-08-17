@@ -13,6 +13,7 @@ public class Graph implements Cloneable, Serializable {
     HashMap<Integer, Vertex> vertices;
     ArrayList<Edge> edges;
     String path;
+    Integer maxSize;
 
     Graph() {
         vertices = new HashMap<>();
@@ -70,6 +71,7 @@ public class Graph implements Cloneable, Serializable {
                 edges.add(edge);
             }
         }
+        maxSize = this.vertices.size();
     }
 
 
@@ -79,8 +81,9 @@ public class Graph implements Cloneable, Serializable {
         return edges.get(r);
     }
 
-    public int merge(Vertex u, Vertex v, int size) {
-        Vertex newVertex = new Vertex(size + 1);
+    public void merge(Vertex u, Vertex v) {
+        this.maxSize = maxSize + 1;
+        Vertex newVertex = new Vertex(maxSize);
         this.vertices.put(newVertex.label, newVertex);
 
         for (Map.Entry<Integer, Vertex> entry : u.adjacentTo.entrySet()) {
@@ -118,8 +121,9 @@ public class Graph implements Cloneable, Serializable {
         //edges check
         int edgeSize = 0;
         while (edgeSize < edges.size()) {
-            if ((edges.get(edgeSize).u.label == u.label && edges.get(edgeSize).v.label == v.label)
-                    || (edges.get(edgeSize).v.label == u.label && edges.get(edgeSize).u.label == v.label)) {
+            int uLable = edges.get(edgeSize).u.label;
+            int vLable = edges.get(edgeSize).v.label;
+            if ((uLable == u.label && vLable == v.label) || (vLable == u.label && uLable == v.label)) {
                 edges.remove(edges.get(edgeSize));
             } else {
                 edgeSize++;
@@ -127,17 +131,16 @@ public class Graph implements Cloneable, Serializable {
         }
 
         for (int i = 0; i < edges.size(); ++i) {
-            if (edges.get(i).u.label == u.label) {
-                edges.get(i).u = newVertex;
-            } else if (edges.get(i).v.label == u.label) {
-                edges.get(i).v = newVertex;
-            } else if (edges.get(i).u.label == v.label) {
-                edges.get(i).u = newVertex;
-            } else if (edges.get(i).v.label == v.label) {
-                edges.get(i).v = newVertex;
+            Edge tempEdge = edges.get(i);
+            if (tempEdge.u.label == u.label) {
+                tempEdge.u = newVertex;
+            } else if (tempEdge.v.label == u.label) {
+                tempEdge.v = newVertex;
+            } else if (tempEdge.u.label == v.label) {
+                tempEdge.u = newVertex;
+            } else if (tempEdge.v.label == v.label) {
+                tempEdge.v = newVertex;
             }
         }
-
-        return size + 1;
     }
 }
