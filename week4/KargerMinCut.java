@@ -24,7 +24,7 @@ public class KargerMinCut {
 
     public static Integer minCut(Graph graph) throws FileNotFoundException {
         int minCut = (int) Math.pow(2, graph.vertices.size() - 1) - 1;
-        for (int i = 0; i < (int) (Math.pow(graph.vertices.size(), 2) * Math.log(graph.vertices.size())); i++) {
+        for (int i = 0; i <= (int) (Math.pow(graph.vertices.size(), 2) * Math.log(graph.vertices.size())); i++) {
             Graph g = graph.deepClone();
             if(i % 100 == 0) {
                 System.out.println("                   calling randomContract " + i + "th time");

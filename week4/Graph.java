@@ -9,7 +9,7 @@ import java.util.*;
  * Also using Iterators(not foreach as a loop, because HashMap doesn't let us
  * remove an element in proper way without iterators.
  */
-public class Graph implements Cloneable, Serializable{
+public class Graph implements Cloneable, Serializable {
     HashMap<Integer, Vertex> vertices;
     ArrayList<Edge> edges;
     String path;
@@ -109,7 +109,7 @@ public class Graph implements Cloneable, Serializable{
                     oldVertexCount++;
                 }
             }
-            while (oldVertexCount == 0) {
+            while (oldVertexCount > 0) {
                 entry.getValue().adjacentTo.put(newVertex.label, newVertex);
                 oldVertexCount--;
             }
@@ -121,10 +121,14 @@ public class Graph implements Cloneable, Serializable{
         }
 
         //edges check
-        for (int i = 0; i < edges.size(); ++i) {
-            if ((edges.get(i).u.label == u.label && edges.get(i).v.label == v.label)
-                    || (edges.get(i).v.label == u.label && edges.get(i).u.label == v.label)) {
-                edges.remove(edges.get(i));
+        int edgeSize = 0;
+        while ( edgeSize  < edges.size()){
+            if ((edges.get(edgeSize).u.label == u.label && edges.get(edgeSize).v.label == v.label)
+                    || (edges.get(edgeSize).v.label == u.label && edges.get(edgeSize).u.label == v.label)) {
+                edges.remove(edges.get(edgeSize));
+            }
+            else{
+                edgeSize++;
             }
         }
 

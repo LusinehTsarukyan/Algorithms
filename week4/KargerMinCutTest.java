@@ -20,27 +20,18 @@ class KargerMinCutTest {
         assertEquals(2, res1);
 
         Graph graph2 = new Graph("C:/Users/Lyulik/Desktop/coursera/input_random_10_25.txt");
-        int minCut = (int) Math.pow(2, graph2.vertices.size() - 1) - 1;
-        for (int i = 0; i < (int) (Math.pow(graph2.vertices.size(), 2) * Math.log(graph2.vertices.size())); i++) {
-            Graph g = graph2.deepClone();
-            if(i % 100 == 0) {
-                System.out.println("                   calling randomContract " + i + "th time");
-            }
-            int result = g.vertices.size();
-            while (g.vertices.size() > 2) {
-                Edge randomEdge = g.pickRandomEdge();
-                System.out.println("random edge nodes -> (" + randomEdge.u.label + ", " + randomEdge.v.label + ")");
-                result = g.merge(randomEdge.u, randomEdge.v, result);
-
-                //remove self loops already in merge function
-            }
-            int crossingEdges = g.edges.size();
-            if (crossingEdges < minCut) {
-                minCut = crossingEdges;
-                System.out.println(minCut);
-            }
-        }
         int res2 = KargerMinCut.minCut(graph2);
         assertEquals(6, res2);
-    }
+
+        Graph graph3 = new Graph("C:/Users/Lyulik/Desktop/coursera/input_random_11_25.txt");
+        int res3 = KargerMinCut.minCut(graph3);
+        assertEquals(8, res3);
+
+        Graph graph4 = new Graph("C:/Users/Lyulik/Desktop/coursera/input_random_3_6.txt");
+        int res4 = KargerMinCut.minCut(graph4);
+        assertEquals(3, res4);
+
+        Graph graph5 = new Graph("C:/Users/Lyulik/Desktop/coursera/input_random_2_6.txt");
+        int res5 = KargerMinCut.minCut(graph5);
+        assertEquals(1, res5);    }
 }
