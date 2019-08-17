@@ -14,6 +14,24 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class QuickSortTest {
 
     @Test
+    public void partitionTest(){
+        List<Integer> arr = new ArrayList<>();
+        arr.add(3);
+        arr.add(1);
+        arr.add(2);
+        arr.add(4);
+        arr.add(5);
+        arr.add(8);
+        arr.add(7);
+        arr.add(6);
+        arr.add(9);
+
+        System.out.println(QuickSort.partition(arr, 1));
+        System.out.println(QuickSort.partition(arr, 2));
+        System.out.println(QuickSort.partition(arr, 3));
+    }
+
+    @Test
     public void partitionTestForFirstElement() {
         List<Integer> arr = new ArrayList();
         arr.add(2);

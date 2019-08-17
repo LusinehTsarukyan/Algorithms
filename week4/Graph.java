@@ -55,13 +55,8 @@ public class Graph implements Cloneable, Serializable {
             int label = line.nextInt();
             while (line.hasNext()) { //adding adjacent to 'v' vertices.
                 int adjToLabel = line.nextInt();
-                for (Map.Entry<Integer, Vertex> entry : vertices.entrySet()) {
-                    Vertex v = entry.getValue();
-                    if (adjToLabel == v.label) {
-                        if (label < adjToLabel) {
-                            vertices.get(label).adjacentTo.put(v.label, v);
-                        }
-                    }
+                if (label < adjToLabel) {
+                    vertices.get(label).adjacentTo.put(adjToLabel, vertices.get(adjToLabel));
                 }
             }
         }
@@ -122,12 +117,11 @@ public class Graph implements Cloneable, Serializable {
 
         //edges check
         int edgeSize = 0;
-        while ( edgeSize  < edges.size()){
+        while (edgeSize < edges.size()) {
             if ((edges.get(edgeSize).u.label == u.label && edges.get(edgeSize).v.label == v.label)
                     || (edges.get(edgeSize).v.label == u.label && edges.get(edgeSize).u.label == v.label)) {
                 edges.remove(edges.get(edgeSize));
-            }
-            else{
+            } else {
                 edgeSize++;
             }
         }
