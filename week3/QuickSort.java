@@ -97,7 +97,7 @@ public class QuickSort {
         int pivot = choosePivot(input, pivotType);
         int i = 1;
 
-        if (pivot != input.get(0)) {   //!!!!!!!!!!!!!!!!!!!!!!!!!???????????????????????????
+        if (pivot != input.get(0)) {
             Collections.swap(input, 0, input.indexOf(pivot));
             pivot = input.get(0);
         }

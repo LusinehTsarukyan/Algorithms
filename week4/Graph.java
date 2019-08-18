@@ -131,6 +131,7 @@ public class Graph implements Cloneable, Serializable {
         }
 
         for (int i = 0; i < edges.size(); ++i) {
+
             Edge tempEdge = edges.get(i);
             if (tempEdge.u.label == u.label) {
                 tempEdge.u = newVertex;

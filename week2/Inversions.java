@@ -34,7 +34,6 @@ public class Inversions {
                 array.add(i);
             }
         }
-        //System.out.println(array);
         return (ArrayList<Integer>) array;
     }
 
