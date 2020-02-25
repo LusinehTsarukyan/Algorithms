@@ -1,6 +1,6 @@
-package week3;
+package DivideAndConquerSortingAndSearchingAndRandomizedAlgorithms.week3;
 
-import week2.Inversions;
+import DivideAndConquerSortingAndSearchingAndRandomizedAlgorithms.week2.Inversions;
 
 import java.io.IOException;
 import java.util.*;

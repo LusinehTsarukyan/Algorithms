@@ -1,15 +1,14 @@
-package week3;
+package DivideAndConquerSortingAndSearchingAndRandomizedAlgorithms.week3;
 
 import org.junit.Test;
-import week2.Inversions;
+import DivideAndConquerSortingAndSearchingAndRandomizedAlgorithms.week2.Inversions;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
+
 
 public class QuickSortTest {
 

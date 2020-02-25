@@ -1,4 +1,4 @@
-package week2;
+package DivideAndConquerSortingAndSearchingAndRandomizedAlgorithms.week2;
 
 import java.io.*;
 import java.util.ArrayList;

@@ -1,12 +1,10 @@
-package week4;
+package DivideAndConquerSortingAndSearchingAndRandomizedAlgorithms.week4;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.io.FileNotFoundException;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static week4.KargerMinCut.randomContract;
-
+import static org.junit.Assert.assertEquals;
 class KargerMinCutTest {
 
     @Test

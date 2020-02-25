@@ -1,11 +1,10 @@
-package week4;
+package DivideAndConquerSortingAndSearchingAndRandomizedAlgorithms.week4;
 
-import org.junit.jupiter.api.Test;
+
+import org.junit.Test;
 
 import java.io.FileNotFoundException;
-import java.util.Iterator;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 class GraphTest {
 

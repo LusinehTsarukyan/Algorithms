@@ -1,4 +1,4 @@
-package week1;
+package DivideAndConquerSortingAndSearchingAndRandomizedAlgorithms.week1;
 
 import java.math.BigInteger;
 

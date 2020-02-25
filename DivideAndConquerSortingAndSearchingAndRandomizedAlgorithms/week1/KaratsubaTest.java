@@ -1,10 +1,11 @@
-package week1;
+package DivideAndConquerSortingAndSearchingAndRandomizedAlgorithms.week1;
 
 import org.junit.Test;
 
 import java.math.BigInteger;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static junit.framework.Assert.assertEquals;
+
 
 public class KaratsubaTest {
     @Test
@@ -14,21 +15,21 @@ public class KaratsubaTest {
         int n = 4;
         double product = KaratsubaAlgorithm.multiplying(a, b, n);
 
-        assertEquals(7006652, product);
+        assertEquals((double)7006652, product);
 
         double a1 = 12;
         double b1 = 34;
         int n1 = 2;
         double product1 = KaratsubaAlgorithm.multiplying(a1, b1, n1);
 
-        assertEquals(408, product1);
+        assertEquals((double)408, product1);
 
         double a2 = 1;
         double b2 = 2;
         int n2 = 1;
         double product2 = KaratsubaAlgorithm.multiplying(a2, b2, n2);
 
-        assertEquals(2, product2);
+        assertEquals((double)2, product2);
     }
 
     @Test
